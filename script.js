@@ -31,7 +31,29 @@ $canvas.addEventListener('mouseLeave', stopDrawing)
 //Metodos
 function startDrawing(e){    
     isDrawing = true;
-    console.log(e)
-}   
-function draw(e){}
-function stopDrawing(){}
+    
+    const { offsetX, offsetY } = e;
+
+    //Guardar las coordenadas del punto de inicio
+    [starX, starY] = [offsetX, offsetY];
+    [lastX, lastY] = [offsetX, offsetY];
+
+}
+   
+function draw(e){
+    if(!isDrawing) return;
+    const { offsetX, offsetY } = e;
+
+    //conmenzando el trazado
+    ctx.beginPath();
+    //mover el trazado a las coordenadas actuales
+    ctx.moveTo(lastX, lastY);
+    //dibujar una linea entre las coordenadas actuales y las nuevas
+    ctx.lineTo(offsetX, offsetY);
+    ctx.stroke();
+    //actualizar las ultimas coordenadas
+    [lastX, lastY] = [offsetX, offsetY];
+}
+function stopDrawing(){
+    isDrawing = false;
+}
