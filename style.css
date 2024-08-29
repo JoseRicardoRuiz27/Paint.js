@@ -30,6 +30,7 @@ header{
     button{
         border: 0;
         background: transparent;
+        cursor: pointer;
 
         &:hover{
             box-shadow: 1px 1px black,
@@ -37,6 +38,14 @@ header{
             inset 1px 1px white;
         }
     }
+}
+
+main{
+    padding: 16px;
+}   
+
+#container{
+    border: 1px solid #080808;
 }
 
 #canvas{
