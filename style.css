@@ -40,6 +40,53 @@ header{
     }
 }
 
+aside{
+    background: silver;
+    width: 52px;
+    padding-top: 2px;
+
+    nav{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1px;
+    }
+
+    button{
+        width: 24px;
+        height: 24px;
+        background: #bdbdbd url("./icon/draw.png") no-repeat center;
+
+        border: 1.5px solid #080808;
+        border-right-color: #000;
+        border-bottom-color: #000;
+
+        image-rendering: pixelated;
+
+        &.active{
+            border-color: #000;
+            border-right-color: #eee;
+            border-bottom-color: #eee;
+        }
+    }
+}
+
+#erase-btn{
+    background-image: url("./icon/erase.png");
+}
+#rectangle-btn{
+    background-image: url("./icon/rectangle.png");
+}
+#ellipse-btn{
+    background-image: url("./icon/ellipse.png");
+}
+#picker-btn{
+    background-image: url("./icon/picker.png");
+}
+#clear-btn{
+    background-image: url("./icon/clear.png");
+}
+
 main{
     padding: 16px;
 }   
