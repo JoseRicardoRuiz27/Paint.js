@@ -23,3 +23,27 @@ h1{
         height: auto;
     }
 }
+header{
+    background: silver;
+    padding: 2px;
+
+    button{
+        border: 0;
+        background: transparent;
+
+        &:hover{
+            box-shadow: 1px 1px black,
+            inset -1px -1px gray,
+            inset 1px 1px white;
+        }
+    }
+}
+
+#canvas{
+    background: #fff;
+}
+
+footer{
+    background: silver;
+    padding: 4px;
+}
