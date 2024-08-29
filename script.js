@@ -9,12 +9,13 @@ const MODES = {
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => document.querySelectorAll(selector);
+const colorPicker = document.getElementById('color-picker');
 
 //elementos
 const $canvas = $('#canvas');
 const ctx = $canvas.getContext('2d');
 
-//Stado
+//Estado
 
 let isDrawing = false;
 let starX, starY;
@@ -27,6 +28,8 @@ $canvas.addEventListener('mousedown', startDrawing)
 $canvas.addEventListener('mousemove', draw)
 $canvas.addEventListener('mouseup', stopDrawing)
 $canvas.addEventListener('mouseLeave', stopDrawing)
+
+colorPicker.addEventListener('change', handleColorChange);
 
 //Metodos
 function startDrawing(e){    
@@ -50,10 +53,16 @@ function draw(e){
     ctx.moveTo(lastX, lastY);
     //dibujar una linea entre las coordenadas actuales y las nuevas
     ctx.lineTo(offsetX, offsetY);
+
     ctx.stroke();
     //actualizar las ultimas coordenadas
     [lastX, lastY] = [offsetX, offsetY];
 }
 function stopDrawing(){
     isDrawing = false;
+}
+
+function handleColorChange(){
+    const { value } = colorPicker;
+    ctx.strokeStyle = value;
 }
