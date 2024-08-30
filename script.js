@@ -15,6 +15,7 @@ const $canvas = $('#canvas');
 const $colorPicker = $('#color-picker');
 const $clearBtn = $('#clear-btn');
 const $drawBtn = $('#draw-btn');
+const $eraseBtn = $('#erase-btn');
 const $rectangleBtn = $('#rectangle-btn');
 
 const ctx = $canvas.getContext('2d');
@@ -42,7 +43,9 @@ $rectangleBtn.addEventListener('click', () => {
 $drawBtn.addEventListener('click', () => {
     setMode(MODES.DRAW);
 })
-
+$eraseBtn.addEventListener('click', () => {
+    setMode(MODES.ERASE);
+})
 
 //Metodos
 function startDrawing(e){    
@@ -61,7 +64,7 @@ function draw(e){
     if(!isDrawing) return;
     const { offsetX, offsetY } = e;
 
-    if (mode === MODES.DRAW) {
+    if (mode === MODES.DRAW || mode === MODES.ERASE) {
     //conmenzando el trazado
     ctx.beginPath();
     //mover el trazado a las coordenadas actuales
@@ -105,12 +108,23 @@ function setMode(newMode){
         $drawBtn.classList.add('active');
         canvas.style.cursor = 'crosshair';
         ctx.lineWidth = 1;
+        ctx.globalCompositeOperation = 'source-over'
         return
     }
     if(newMode === MODES.RECTANGLE){
         $rectangleBtn.classList.add('active');
         canvas.style.cursor = 'nw-resize';
         ctx.lineWidth = 2;
+        ctx.globalCompositeOperation = 'source-over'
+        return
+    }
+    if(newMode === MODES.ERASE){
+        $eraseBtn.classList.add('active');
+        canvas.style.cursor = 'url("./cursor/erase.png")0 24, auto';
+        ctx.globalCompositeOperation = 'destination-out'
+        ctx.lineWidth = 20
         return
     }
 }
+//init
+setMode(MODES.DRAW);
