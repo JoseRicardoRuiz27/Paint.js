@@ -18,6 +18,7 @@ const $clearBtn = $('#clear-btn');
 const $drawBtn = $('#draw-btn');
 const $eraseBtn = $('#erase-btn');
 const $rectangleBtn = $('#rectangle-btn');
+const $elipseBtn = $('#elipse-btn');
 
 const ctx = $canvas.getContext('2d');
 
@@ -40,6 +41,9 @@ $colorPicker.addEventListener('change', handleColorChange);
 $clearBtn.addEventListener('click', clearCanvas);
 $rectangleBtn.addEventListener('click', () => {
     setMode(MODES.RECTANGLE);
+})
+$elipseBtn.addEventListener('click', () => {
+    setMode(MODES.ELLIPSE);
 })
 $drawBtn.addEventListener('click', () => {
     setMode(MODES.DRAW);
@@ -92,6 +96,17 @@ function draw(e){
         ctx.stroke();
         return
     }
+    if (mode === MODES.ELLIPSE) {
+        ctx.putImageData(imageData, 0, 0);
+
+        const width = Math.abs(offsetX - starX);
+        const height = Math.abs(offsetY - starY);
+
+        ctx.beginPath();
+        ctx.ellipse(starX, starY, width / 2, height / 2, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        return
+    }
 }
 function stopDrawing(){
     isDrawing = false;
@@ -103,7 +118,7 @@ function handleColorChange(){
 function clearCanvas(){
     ctx.clearRect(0, 0, $canvas.width, $canvas.height);
 }
-function setMode(newMode){    
+async function setMode(newMode){    
     mode = newMode;
     //para cambiar el boton con la clase activa
     $('button.active')?.classList.remove('active');
@@ -122,6 +137,13 @@ function setMode(newMode){
         ctx.globalCompositeOperation = 'source-over'
         return
     }
+    if(newMode === MODES.ELLIPSE){
+        $elipseBtn.classList.add('active');
+        canvas.style.cursor = 'nw-resize';
+        ctx.lineWidth = 2;
+        ctx.globalCompositeOperation = 'source-over'
+        return
+    }
     if(newMode === MODES.ERASE){
         $eraseBtn.classList.add('active');
         canvas.style.cursor = 'url("./cursor/erase.png")0 24, auto';
@@ -131,6 +153,16 @@ function setMode(newMode){
     }
     if(newMode === MODES.PICKER){
         $pickerBtn.classList.add('active');
+        const eyeDropper = new window.EyeDropper();
+        
+        try {
+            const color = await eyeDropper.open();
+            const {sRGBHex} = color;
+            ctx.strokeStyle = sRGBHex;
+            $colorPicker.value = sRGBHex;
+            setMode(MODES.DRAW);
+        } catch (error) {
+        }
         return
     }
 }
