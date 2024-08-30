@@ -26,6 +26,7 @@ h1{
 header{
     background: silver;
     padding: 2px;
+    grid-area: header;
 
     button{
         border: 0;
@@ -42,6 +43,7 @@ header{
 
 aside{
     background: silver;
+    grid-area: aside;
     width: 52px;
     padding-top: 2px;
 
@@ -93,6 +95,11 @@ main{
 
 #container{
     border: 1px solid #080808;
+    display: grid;
+    grid-template-areas: 
+    "header header header"
+    "aside main main"
+    "footer footer footer";
 }
 
 #canvas{
@@ -100,6 +107,7 @@ main{
 }
 
 footer{
+    grid-area: footer;
     background: silver;
     padding: 4px;
 }
