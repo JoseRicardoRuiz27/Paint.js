@@ -13,6 +13,7 @@ const $$ = selector => document.querySelectorAll(selector);
 //elementos
 const $canvas = $('#canvas');
 const $colorPicker = $('#color-picker');
+const $pickerBtn = $('#picker-btn');
 const $clearBtn = $('#clear-btn');
 const $drawBtn = $('#draw-btn');
 const $eraseBtn = $('#erase-btn');
@@ -45,6 +46,9 @@ $drawBtn.addEventListener('click', () => {
 })
 $eraseBtn.addEventListener('click', () => {
     setMode(MODES.ERASE);
+})
+$pickerBtn.addEventListener('click', () => {
+    setMode(MODES.PICKER);
 })
 
 //Metodos
@@ -125,6 +129,15 @@ function setMode(newMode){
         ctx.lineWidth = 20
         return
     }
+    if(newMode === MODES.PICKER){
+        $pickerBtn.classList.add('active');
+        return
+    }
 }
 //init
 setMode(MODES.DRAW);
+
+//Show picker if browser supports it
+if(typeof window.EyeDropper !== 'undefined'){
+    $pickerBtn.removeAttribute('disabled');
+}
